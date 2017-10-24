@@ -1,0 +1,37 @@
+#lang racket
+
+(let ((x 2)) (+ x 3))
+(let ((y 3)) (+ 2 y))
+(let ((x 2) (y 3)) (+ x y))
+
+(let ([list1 '(a b c)] [list2 '(d e f)])
+  (cons (cons (car list1)
+              (car list2))
+        (cons (car (cdr list1))
+              (car (cdr list2)))))
+
+(let ([f +]) (f 2 3))
+(let ([+ *]) (+ 2 3))
+
+(let ([a 4] [b -3])
+  (let ([a-squared (* a a)]
+        [b-squared (* b b)])
+    (+ a-squared b-squared)))
+
+(let ([x 1])
+  (let ([x (+ x 1)])
+    (+ x x)))
+
+(let ([x 9])
+  (* x
+     (let ([x (/ x 3)])
+       (+ x x)))) ;54
+
+((lambda (x) (+ x x)) (* 3 4))
+
+(let ([double-cons (lambda (x) (cons x x))])
+  (double-cons 'a))
+
+(let ([x 'a])
+  (let ([f (lambda (y) (list x y))])
+    (f 'b)))

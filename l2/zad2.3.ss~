@@ -1,0 +1,21 @@
+#lang racket
+
+(define (splot . lists)
+  (cond
+    ;no elem
+    ((null? lists) '())
+    ;one elem
+    ((null? (cdr lists)) (map list (car lists)))
+    ;two elems
+    ((null? (cddr lists)) (splotDwa (car lists) (cadr lists)))
+    ;more
+    (else (polacz (map (lambda (x) (map (lambda (y) (cons x y)) (apply splot (cdr lists)))) (car lists))))))
+
+;'splot' for two elems
+(define (splotDwa list1 list2)
+  (polacz (map (lambda (l1) (map (lambda (l2) (list l1 l2)) list2)) list1)))
+
+(define (polacz lists)
+  (cond
+    ((null? lists) '())
+    (else (append (car lists) (polacz (cdr lists))))))

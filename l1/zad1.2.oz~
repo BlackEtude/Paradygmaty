@@ -1,0 +1,84 @@
+declare
+fun {Reverse L}
+   local
+      fun {Rev Start End}
+	 if Start == nil then End
+	 else
+	    local Head Tail in
+	       Head|Tail = Start
+	       {Rev Tail Head|End}
+	    end
+	 end
+      end
+   in
+      {Rev L nil}
+   end
+end
+
+declare
+fun {Merge L1 L2 L3}
+   local
+      fun {Merge2 RL1 RL2 RL3 S}
+	 if {And {And RL1 == nil RL2 == nil} RL3 = nil} then S
+	 else
+	    local H1 H2 H3 T1 T2 T3 in
+	       if RL1 == nil then
+		  H1 = nil
+		  T1 = nil
+	       else
+		  H1|T1 = RL1
+	       end
+	       
+	       if RL2 == nil then
+		  H2 = nil
+		  T2 = nil
+	       else
+		  H2|T2 = RL2
+	       end
+
+	       if RL3 == nil then
+		  H2 = nil
+		  T3 = nil
+	       else H3|T3 = RL3
+	       end
+
+	       if {And H1 == nil {And H2 == nil H3 \= nil}} then
+		  {Merge2 T1 T2 T3 H3|S}
+	       elseif {And H1 == nil {And H2 \= nil H3 == nil}} then
+		  {Merge2 T1 T2 T3 H2|S}
+	       elseif {And H1 \= nil {And H2 == nil H3 == nil}} then
+		  {Merge2 T1 T2 T3 H1|S}
+	       elseif {And H1 \= nil {And H2 \= nil H3 == nil}} then
+		  if H1 < H2 then {Merge2 T1 T2 T3 H1|H2|S}
+		  else {Merge2 T1 T2 T3 H2|H1|S}
+		  end
+	       elseif {And H1 \= nil {And H2 == nil H3 \= nil}} then
+		  if H1 < H3 then {Merge2 T1 T2 T3 H1|H3|S}
+		  else {Merge2 T1 T2 T3 H3|H1|S}
+		  end
+	       elseif {And H1 == nil {And H2 \= nil H3 \= nil}} then
+		  if H2 < H3 then {Merge2 T1 T2 T3 H2|H3|S}
+		  else {Merge2 T1 T2 T3 H3|H2|S}
+		  end
+	       else
+		  if H1 < H2 then
+		     if H2 < H3 then {Merge2 T1 T2 T3 H1|H2|H3|S}
+		     elseif H1 < H3 then {Merge2 T1 T2 T3 H1|H3|H2|S}
+		     else {Merge2 T1 T2 T3 H3|H1|H2|S}
+		     end
+		  else
+		     if H3 < H2 then {Merge2 T1 T2 T3 H3|H2|H1|S}
+		     elseif H1 < H3 then {Merge2 T1 T2 T3 H2|H1|H3|S}
+		     else {Merge2 T1 T2 T3 H2|H3|H1|S}
+		     end
+		  end
+	       end
+	    end
+	 end
+      end
+   in
+      {Merge2 {Reverse L1} {Reverse L2} {Reverse L3} nil}
+   end
+end
+{Browse {Merge [1 3 6] [2 4] [5]}}
+		 

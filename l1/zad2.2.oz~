@@ -1,0 +1,25 @@
+declare
+fun {Node Element In Stream}
+   case In
+   of nil then
+      Stream = nil
+      Element
+   [] Head|Tail then Min Max NewStream in
+      Min#Max = if Element > Head then Head#Element
+		else Element#Head end
+      Stream = Max|NewStream
+      {Node Min Tail NewStream}
+   end
+end
+
+fun {NSort In}
+   case In
+   of nil then nil
+   [] Head|Tail then Stream in
+      thread {Node Head Tail Stream} end|
+      {NSort Stream}
+   end
+end
+
+{Browse {NSort 1|5|2|3|4|1|2|nil}}
+

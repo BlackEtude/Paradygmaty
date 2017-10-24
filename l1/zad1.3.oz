@@ -1,0 +1,14 @@
+declare
+fun {Reverse L}
+   {FoldL L fun {$ Y X} X|Y end nil}
+end
+/*returns f(f(f(nil 0) 1) 2)*/
+
+fun {Append L1 L2}
+   {FoldR L1 fun {$ X Y} X|Y end L2}
+end
+/*returns f(L2 f(L1 (f ..())))*/
+
+{Browse {Reverse [5 4 3 2 1 0]}}
+{Browse {Append [1 2] [3 6 7]}}
+ 

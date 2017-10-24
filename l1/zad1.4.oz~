@@ -1,0 +1,37 @@
+declare
+fun {SearchTree T V}
+   if T == nil then nil
+   else
+      if T.value \= V then {Append {SearchTree T.left V} {SearchTree T.right V}}
+      else {Append {SearchTree T.left V} T.key|{SearchTree T.right V}}
+      end
+   end
+end
+   
+T0 T1 T2 T3 T4 T5 T8 T9
+T0 = tree(key:0 value:2 left:nil right:nil)
+T2 = tree(key:2 value:2 left:nil right:nil)
+T5 = tree(key:5 value:2 left:nil right:nil)
+T9 = tree(key:9 value:3 left:nil right:nil)
+T1 = tree(key:1 value:2 left:T0 right:T2)
+T8 = tree(key:8 value:3 left:T5 right:T9)
+T4 = tree(key:4 value:3 left:nil right:T8)
+T3 = tree(key:3 value:2 left:T1 right:T4)
+
+{Browse {SearchTree T3 2}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

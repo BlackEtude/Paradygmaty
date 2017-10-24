@@ -1,0 +1,20 @@
+declare
+proc {Game P1 P2}
+   T1 T2 T3
+   fun {Player Id IN}
+      case IN of
+	 X|Y then
+	 {Delay 1000}
+	 {Browse Id#X}
+	 if X == ping then pong|{Player Id Y}
+	 else ping|{Player Id Y}
+	 end
+      end
+   end
+in
+   T2 = thread {Player P1 T1} end
+   T3 = thread {Player P2 T2} end
+   T1 = ping | T3
+end
+
+{Game 'p1' 'p2'}

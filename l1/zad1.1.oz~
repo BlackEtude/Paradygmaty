@@ -1,0 +1,21 @@
+declare
+fun {Reverse L}
+   local
+      fun {Rev Start End}
+	 {Browse 'Inside Rev'}
+	 if Start == nil then End
+	 else
+	    local Head Tail in
+	       Head|Tail = Start
+	       {Rev Tail Head|End}
+	    end
+	 end
+      end
+   in
+      {Browse 'start reversing'}
+      {Rev L nil}
+   end
+end
+{Browse 'Starting list:'}
+{Browse [5 4 3 2 1 0]}
+{Browse {Reverse [5 4 3 2 1 0]}}

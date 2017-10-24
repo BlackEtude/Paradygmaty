@@ -1,0 +1,7 @@
+#lang racket
+
+(define mymap
+  (lambda (fun lista)
+    (cond ((null? lista) '())
+          (else (cons (fun (car lista))
+                      (mymap fun (cdr lista)))))))

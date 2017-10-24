@@ -1,0 +1,16 @@
+declare
+R1 R2
+fun {NewPortObject Proc}
+   Sin in
+   thread for Msg in Sin do {Proc Msg} end
+   end {NewPort Sin}
+end
+/*no accumulator needed; proc wywolywana dla kazdej wiadomosci*/
+
+fun {Rozmowca Fun I}
+   {NewPortObject proc {$ Msg} {Delay 700} {Browse Msg} {Send I {Fun Msg}} end}
+end
+in
+R1 = {Rozmowca fun {$ X} X+1 end R2}
+R2 = {Rozmowca fun {$ X} X-1 end R1}
+{Send R1 0}
